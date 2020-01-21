@@ -1,0 +1,54 @@
+---
+title: "TITLE HERE"
+author: "YOUR NAME HERE"
+date: '`r format(Sys.time(), "%A, %B %d, %Y @ %I:%M %p")`'
+output: 
+  html_document: 
+    theme: yeti
+    highlight: textmate
+    code_folding: hide
+---
+
+```{r globalopts, include = FALSE}
+library(knitr)
+opts_chunk$set(comment = "", message = FALSE, warning = FALSE)
+```
+
+### Activity
+
+We will be working through some of the information and examples in [YaRrr! The Pirate’s Guide to R Section 5.2 Vectors](https://bookdown.org/ndphillips/YaRrr/vectors.html) and [YaRrr! The Pirate’s Guide to R Section 8.2 Creating matrices and dataframes](https://bookdown.org/ndphillips/YaRrr/creating-matrices-and-dataframes.html). We will also talk about formatting [`R` code chunks and using inline `R` code](https://bookdown.org/yihui/rmarkdown/r-code.html).
+
+
+### Examples
+
+#### Using the `c()` function
+
+The following vectors are all created using the `c()` function.
+
+```{r}
+# Create the object a containing the integers from 1 to 5
+a <- c(1, 2, 3, 4, 5)
+
+# Print the result
+a
+
+# Create objects a and b containing integers 1-5 and 6-10
+# Create object x, combining a and b into a single vector
+a <- c(1, 2, 3, 4, 5)
+b <- c(6, 7, 8, 9, 10)
+x <- c(a, b)
+x
+
+# Create a character vector containing the following strings
+char.vec <- c("Ceci", "nest", "pas", "une", "pipe")
+char.vec
+```
+
+We can also include object values and small calculations in the plain text portion of `R` Markdown documents using inline `R` code, such as `` `r "a = \u0060r a\u0060"` ``, which will render as a = `r a`. For reproducibility, this method is preferable to hard-coding the results of calculations, especially when the values can change, such as those resulting from some random process.
+
+Another example, the vector x = {`r x`} and 10x = {`r 10*x`}.
+
+***
+```{r}
+sessionInfo()
+```
