@@ -1,0 +1,114 @@
+---
+title: "Final"
+author: "Elise Haylett"
+date: "12/9/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Chapter 25
+
+```{r chapter 25}
+library(readxl)
+bodyfat <- read_excel("~/git_projects/notes for Stats Methods I/bodyfat.xlsx")
+View(bodyfat)
+
+# Define what your x and y are
+x <- bodyfat$weight
+y <- bodyfat$body.fat
+
+# Create a scatterplot of x vs. y
+plot(x, y, 
+     xlab = "weight", 
+     ylab = "body fat percentage", 
+     col = "red")
+
+# Find the correlation between x and y
+cor(x,y)
+
+# Find the R^2 value
+Rsquared <- cor(x,y)^2
+Rsquared
+
+# Everything looks good? Then fit the linear model using lm.
+model <- lm(y~x) #linear model
+
+# We can add the line to the plot as a visual aid NOTE: you need to run plot before running this for both to appear.
+abline(lm(y~x))
+
+summary(model)
+
+# Now let's look at the model we created
+names(model)
+
+model$coefficients  #[1] is the intercept, [2] is the slope
+model$fitted.values
+model$residuals
+
+#residual standard deviation
+resSD<-sqrt(sum((model$residuals)^2)/(length(model$residuals)-2))
+resSD
+```
+
+## Chapter 26
+
+```{r chapter 26}
+library(readr)
+library(dplyr)
+cfb <- read_csv("~/git_projects/notes for Stats Methods I/CFB2018complete.csv")
+head(cfb)
+tail(cfb)
+options(scipen = 999)
+
+#must be a character vector to assign levels #make factor variable
+rating <- cfb %>% select(Zsagarin, conference)
+rating
+typeof(rating$conference)
+
+factor(rating$conference)
+typeof(rating$conference)
+
+boxplot(Zsagarin ~ conference,
+        data = rating,
+        col = rainbow(5),
+        main = "zsagarin rating by conference",
+        xlab = "conference",
+        ylab = "zsagarin rating")
+myaov <- aov(Zsagarin ~ conference, data = rating)
+summary(myaov)
+
+#checking normality
+qqnorm(rating$Zsagarin)
+
+
+tukey.test <- TukeyHSD(myaov)
+tukey.test
+
+plot(tukey.test)
+
+```
+
+
+##Chapter 28
+
+```{r chapter 28}
+library(readxl)
+bodyfat <- read_excel("~/git_projects/notes for Stats Methods I/bodyfat.xlsx")
+View(bodyfat)
+
+# Define what your x and y are
+x <- bodyfat$weight
+y <- bodyfat$body.fat
+
+multiple <- lm(bodyfat$body.fat ~ bodyfat$age + bodyfat$weight)
+
+summary(multiple)
+
+plot(bodyfat$age ~ bodyfat$weight)
+
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
